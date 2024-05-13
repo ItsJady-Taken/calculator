@@ -4,12 +4,20 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid black;
+    
 }
 
-#calculator-body {
-    margin: 100px auto;
+.calculator-body {
+    margin: 300px auto;
     border: 1px solid black;
     display: flex;
     flex-direction: column;
+}
+
+.output {
+    display: flex;
+    justify-content: baseline;
+    padding: 10px;
+    border: 1px solid black;
+    margin: 20px;
 }
