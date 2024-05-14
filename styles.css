@@ -7,17 +7,19 @@ body {
     
 }
 
-.calculator-body {
-    margin: 300px auto;
-    border: 1px solid black;
+#calculator-body {
+    margin: 100px auto;
+    padding: 30px;
+    border: 3px solid black;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    gap: 20px;
 }
 
 .output {
-    display: flex;
-    justify-content: baseline;
-    padding: 10px;
+    padding: 0 10px;
+    margin: 10px;
     border: 1px solid black;
-    margin: 20px;
+    display: flex;
 }
