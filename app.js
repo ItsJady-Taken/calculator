@@ -1,81 +1,111 @@
-document.addEventListener('DOMContentLoaded',() => {
-    const display = document.querySelector('.display')
-    const numbers = document.querySelectorAll('.all-button');
-    let operator = null;
-    let previousInput = null;
-    let input = '0';
-    let resetDisplay = false;
+const display = document.querySelector('#display');
+const buttons = document.querySelectorAll('#all-button');
+let operator = null;
+let input = '';
+let previousInput = null;
+let result = '';
 
-    numbers.forEach((num) =>{
-        num.addEventListener('click', ()=>{
-            const value = num.textContent;
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        const value = button.textContent
 
-            if(value >= '0' && value <= '9'){
-                handleNum(value)
-            }
-            else {
-                inputOperator(value)
-            }
-            displayContent();
-        })  
-    })   
-
-
-    function add(num1, num2) {
-        return num1 + num2;
-    }
-
-    function subtract(num1, num2) {
-        return num1 - num2; 
-    }
-
-    function multiply(num1, num2) {
-        return num1 * num2;
-    }
-
-    function divide(num1, num2) {
-        return num1 / num2;
-    }
-
-    function operate(num1, num2, operating) {
-        switch(operating) {
-            case '+': return add(num1, num2)
-            case '-': return subtract(num1, num2)
-            case '*': return multiply(num1, num2)
-            case '/': return divide(num1, num2)
-            default: return num2;
+        if(value >= '0' && value <= '9'){
+           handleNum(value) 
         }
-    }
-
-    function handleNum(num) {
-        if(resetDisplay){
-            input = num;
-            resetDisplay = false;
+        else if(value === 'C') {
+            clearAll();
         }
-        else if(input === '0'){
-            input = num;
+        else if(value === '←') {
+            backSpace();
+        }
+        else if(value === '=') {
+            operate();   
+        }
+        else if(value === '.') {
+            if (!input.includes('.')) {
+                input += '.';
+              }
+              display.textContent = input; // Update display after decimal input  
         }
         else {
-            input += num;
+            handleOperator(value);
+        
         }
-        console.log(input)
-    }
-
-    function inputOperator(ope) {
-        operator = ope;
-        if(previousInput != null && !resetDisplay){
-            previousInput = operate(parseFloat(previousInput), parseFloat(input), operator);
-            input = previousInput.toString();
+        // display the numbers and operator
+        if(operator != null) {
+            display.textContent = previousInput + operator + input // if the user press and operater
+        }
+        else if(value == '=') {
+            display.textContent = result.toString(); //convert Int into String (does not work when put in the above [else if])
         }
         else {
-            previousInput = input
+            display.textContent = input;
         }
         
-        resetDisplay = true;
-        console.log(operator)
-    }
+    })
+})
 
-    function displayContent() {
-        display.textContent = input
+function clearAll() {
+    display.value = "";
+    input = '';
+    operator = null;
+    previousInput = null;
+}
+
+// alow multiple digit instead of just one
+function handleNum(value) {
+    if (input === '') {
+        input = value;
+    } 
+    else {
+        input += value;
     }
-});
+}
+
+// if the user press an operater, safe the input in a previousInput than reset input
+function handleOperator(value) {
+    operator = value;
+    if(previousInput === null) {
+        previousInput = input;
+        input = '';
+    }
+}
+
+// delete the last number and than update the display
+function backSpace() {
+    input = input.slice(0, -1);
+    display.textContent = input;
+}
+
+function operate() {
+    if(operator == null) {
+        clearAll()
+    }
+    // after each case reset everything
+    switch (operator) {
+        case '+':
+            result = parseFloat(previousInput) + parseFloat(input)
+            previousInput = '';
+            operator = null;
+            input = '';
+            break;
+        case '-':
+            result = parseFloat(previousInput) - parseFloat(input)
+            previousInput = '';
+            operator = null;
+            input = '';
+            break;
+        case '*':
+            result = parseFloat(previousInput) * parseFloat(input)
+            previousInput = '';
+            operator = null;
+            input = ''
+            break;
+        case '/':
+            result = parseFloat(previousInput) / parseFloat(input)
+            previousInput = '';
+            operator = null;
+            input = '';
+            break;               
+    }
+}
