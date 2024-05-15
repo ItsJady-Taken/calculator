@@ -1,25 +1,28 @@
 body {
-    margin: 0;
-    padding: 0;
-    display: flex;
+    display:flex;
     justify-content: center;
     align-items: center;
-    
+    background-color: rgb(134, 134, 134);
 }
 
-#calculator-body {
+.container{
+    padding-top: 0;
+    background-color: rgb(58, 58, 58);
+    border: 1px solid black;
     margin: 100px auto;
-    padding: 30px;
-    border: 3px solid black;
+    height: 500px;
+    width: 500px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 20px;
+    align-items: center;
+    
+    gap: 40px;
 }
 
-.output {
-    padding: 0 10px;
-    margin: 10px;
-    border: 1px solid black;
-    display: flex;
+.display {
+    border-radius: 10px;
+    background-color: transparent;
+    width: 300px;
+    height: 50px;
 }
