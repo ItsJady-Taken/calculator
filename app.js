@@ -35,9 +35,6 @@ buttons.forEach((button) => {
         if(operator != null) {
             display.textContent = previousInput + operator + input // if the user press and operater
         }
-        else if(value == '=') {
-            display.textContent = result.toString(); //convert Int into String (does not work when put in the above [else if])
-        }
         else {
             display.textContent = input;
         }
@@ -73,39 +70,38 @@ function handleOperator(value) {
 
 // delete the last number and than update the display
 function backSpace() {
+    input = input.toString()
     input = input.slice(0, -1);
     display.textContent = input;
 }
 
 function operate() {
-    if(operator == null) {
+    if(operator == null || input == '') {
+        // 
         clearAll()
     }
     // after each case reset everything
     switch (operator) {
         case '+':
-            result = parseFloat(previousInput) + parseFloat(input)
-            previousInput = '';
+            input = parseFloat(previousInput) + parseFloat(input)
+            previousInput = null;
             operator = null;
-            input = '';
             break;
         case '-':
-            result = parseFloat(previousInput) - parseFloat(input)
-            previousInput = '';
+            input = parseFloat(previousInput) - parseFloat(input)
+            previousInput = null;
             operator = null;
-            input = '';
             break;
         case '*':
-            result = parseFloat(previousInput) * parseFloat(input)
-            previousInput = '';
+            input = parseFloat(previousInput) * parseFloat(input)
+            previousInput = null;
             operator = null;
-            input = ''
             break;
         case '/':
-            result = parseFloat(previousInput) / parseFloat(input)
-            previousInput = '';
+            input = parseFloat(previousInput) / parseFloat(input)
+            previousInput = null;
             operator = null;
-            input = '';
-            break;               
+            break; 
     }
+    display.textContent = input
 }
